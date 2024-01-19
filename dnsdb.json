@@ -1,19 +1,19 @@
 {
     "appid": "adf140f0-60e3-45ff-8d69-258b3c0a63b1",
-    "name": "DNSDB",
-    "description": "This app supports investigative DNS lookup actions on DNSDB",
-    "publisher": "Splunk",
+    "name": "Farsight DNSDB",
+    "description": "This app supports investigative DNS lookup actions on DomainTools Farsight DNSDB, the world's larges Passive DNS historical database",
+    "publisher": "DomainTools",
     "package_name": "phantom_dnsdb",
     "type": "investigative",
     "license": "Copyright (c) 2016-2023 Splunk Inc.",
     "main_module": "dnsdb_connector.py",
-    "app_version": "2.1.1",
+    "app_version": "2.2.0",
     "utctime_updated": "2022-01-29T02:16:14.000000Z",
-    "product_vendor": "Farsight Security, Inc.",
-    "product_name": "DNSDB",
+    "product_vendor": "Farsight Security, Inc. (now part of DomainTools)",
+    "product_name": "Farsight DNSDB",
     "contributors": [
         {
-            "name": "Farsight Security, Inc."
+            "name": "DomainTools Integrations Team"
         }
     ],
     "python_version": "3",
@@ -23,8 +23,8 @@
     ],
     "product_version_regex": ".*",
     "min_phantom_version": "5.5.0",
-    "logo": "logo_dnsdb.svg",
-    "logo_dark": "logo_dnsdb_dark.svg",
+    "logo": "logo_domaintools_dnsdb.svg",
+    "logo_dark": "logo_domaintools_dnsdb_dark.svg",
     "directory": "dnsdb_adf140f0-60e3-45ff-8d69-258b3c0a63b1",
     "version": 1,
     "appname": "-",
@@ -137,7 +137,7 @@
         },
         {
             "action": "rdata name lookup",
-            "description": "Performs Name RDATA Lookup",
+            "description": "Performs a Right-Hand (RDATA) Lookup, finding names in record results",
             "verbose": "If the <b>limit</b> parameter is not specified, the action will use 200.",
             "type": "investigate",
             "identifier": "lookup_rdata_name",
@@ -337,7 +337,7 @@
         },
         {
             "action": "rdata ip lookup",
-            "description": "Performs IP RDATA Lookup",
+            "description": "Performs a Right-Hand (RDATA) Lookup, finding IPs in record results",
             "verbose": "If the <b>limit</b> parameter is not specified, the action will use 200.",
             "type": "investigate",
             "identifier": "lookup_rdata_ip",
@@ -355,7 +355,7 @@
                     "primary": true
                 },
                 "network_prefix": {
-                    "description": "Network prefix",
+                    "description": "A numeric parameter which is used to search out the rdata within the network prefix range. Example '24' along with an ip if 192.0.2.0 to indicate '192.0.2.0/24'",
                     "order": 1,
                     "data_type": "numeric"
                 },
@@ -555,7 +555,7 @@
         },
         {
             "action": "rdata raw lookup",
-            "description": "Lookup raw RDATA",
+            "description": "Performs a Right-Hand (RDATA) Lookup, finding raw hexadecimal in record results",
             "verbose": "If the <b>limit</b> parameter is not specified, the action will use 200.",
             "type": "investigate",
             "identifier": "lookup_rdata_raw",
@@ -571,7 +571,7 @@
                     ],
                     "primary": true
                 },
-                "type": {
+                "record_type": {
                     "value_list": [
                         "ANY",
                         "A",
@@ -656,7 +656,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.type",
+                    "data_path": "action_result.parameter.record_type",
                     "data_type": "string",
                     "contains": [
                         "dnsdb rrtype"
@@ -801,7 +801,7 @@
         },
         {
             "action": "rrset lookup",
-            "description": "Perform a DNSDB RRSET lookup",
+            "description": "Perform a DNSDB Left-Hand (RRSET) lookup, finding records associated with a given hostname",
             "verbose": "If the <b>limit</b> parameter is not specified, the action will use 200.",
             "type": "investigate",
             "identifier": "lookup_rrset",
@@ -817,7 +817,7 @@
                     "order": 0,
                     "primary": true
                 },
-                "type": {
+                "record_type": {
                     "value_list": [
                         "ANY",
                         "A",
@@ -884,7 +884,7 @@
                     "data_type": "string"
                 },
                 "bailiwick": {
-                    "description": "Bailiwick",
+                    "description": "A bailiwick is an enclosing zone for a nameserver that serves the RRset or the name of the zone containing the RRset (e.g. com, example.com).",
                     "data_type": "string",
                     "order": 6
                 },
@@ -907,7 +907,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.type",
+                    "data_path": "action_result.parameter.record_type",
                     "data_type": "string",
                     "contains": [
                         "dnsdb rrtype"
@@ -1159,7 +1159,7 @@
         },
         {
             "action": "flex search",
-            "description": "Perform a Flex search",
+            "description": "Perform a Flexible search, supporting regular expression or wildcard matching",
             "verbose": "If the <b>limit</b> parameter is not specified, the action will use default value as 10000.",
             "type": "investigate",
             "identifier": "flex_search",
@@ -1171,7 +1171,7 @@
                     "data_type": "string",
                     "order": 0
                 },
-                "type": {
+                "record_type": {
                     "value_list": [
                         "RDATA",
                         "RRNAMES"
@@ -1187,7 +1187,7 @@
                         "glob"
                     ],
                     "required": true,
-                    "description": "Search syntax type",
+                    "description": "Which field of the DNS Resource Records to search",
                     "order": 2,
                     "data_type": "string"
                 },
@@ -1233,7 +1233,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.type",
+                    "data_path": "action_result.parameter.record_type",
                     "data_type": "string",
                     "example_values": [
                         "RDATA",

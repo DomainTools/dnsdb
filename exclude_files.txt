@@ -1,0 +1,9 @@
+.git*
+*.pyc
+.idea
+bin
+lib
+pyvenv.cfg
+build.sh
+venv
+dnsdb.tgz

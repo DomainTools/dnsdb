@@ -3,8 +3,8 @@
 
 Publisher: Splunk
 Connector Version: 2.1.1
-Product Vendor: Farsight Security, Inc. (now part of DomainTools)
-Product Name: Farsight DNSDB
+Product Vendor: Farsight Security, Inc.
+Product Name: DNSDB
 Product Version Supported (regex): ".\*"
 Minimum Product Version: 5.5.0
 

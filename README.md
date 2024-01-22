@@ -1,14 +1,14 @@
 [comment]: # "Auto-generated SOAR connector documentation"
-# DNSDB
+# Farsight DNSDB
 
-Publisher: Splunk
-Connector Version: 2.1.1
-Product Vendor: Farsight Security, Inc.
-Product Name: DNSDB
-Product Version Supported (regex): ".\*"
-Minimum Product Version: 5.5.0
+Publisher: DomainTools  
+Connector Version: 2.2.0  
+Product Vendor: Farsight Security, Inc. (now part of DomainTools)  
+Product Name: Farsight DNSDB  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.5.0  
 
-This app supports investigative DNS lookup actions on DNSDB
+This app supports investigative DNS lookup actions on DomainTools Farsight DNSDB, the world's larges Passive DNS historical database
 
 [comment]: # "File: README.md"
 [comment]: # "Copyright (c) 2016-2023 Splunk Inc."
@@ -94,10 +94,10 @@ This app supports investigative DNS lookup actions on DNSDB
         -   Wildcards are one of two forms: a left-hand (\*.example.com) or right-hand
             (www.example.\*) wildcard domain name.
         -   Example: www.farsightsecurity.com
-    -   **<u>Action Parameter</u> ​ - type**
+    -   **<u>Action Parameter</u> ​ - record type**
         -   Type is a different DNS record type. The supported types are listed below this section.
             For more information check out the dnsdb API documentation.
-        -   Default value for ‘type’ is ‘ANY’.
+        -   Default value for ‘record type’ is ‘ANY’.
     -   **<u>Action Parameter</u> ​ - bailiwick**
         -   A bailiwick is an enclosing zone for a nameserver that serves the RRset or the name of
             the zone containing the RRset.
@@ -182,7 +182,7 @@ This app supports investigative DNS lookup actions on DNSDB
 
 
 
--   ### For 'Type' action parameter in RDATA Raw Lookup and RRSET Lookup
+-   ### For 'Record Type' action parameter in RDATA Raw Lookup and RRSET Lookup
 
 
 
@@ -271,37 +271,37 @@ This app supports investigative DNS lookup actions on DNSDB
 
 
 ### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a DNSDB asset in SOAR.
+The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Farsight DNSDB asset in SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
 **api_key** |  required  | password | API Key
 
-### Supported Actions
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity
-[check rate limit](#action-check-rate-limit) - Get data of current data limit
-[rdata name lookup](#action-rdata-name-lookup) - Performs Name RDATA Lookup
-[rdata ip lookup](#action-rdata-ip-lookup) - Performs IP RDATA Lookup
-[rdata raw lookup](#action-rdata-raw-lookup) - Lookup raw RDATA
-[rrset lookup](#action-rrset-lookup) - Perform a DNSDB RRSET lookup
-[flex search](#action-flex-search) - Perform a Flex search
+### Supported Actions  
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity  
+[check rate limit](#action-check-rate-limit) - Get data of current data limit  
+[rdata name lookup](#action-rdata-name-lookup) - Performs a Right-Hand (RDATA) Lookup, finding names in record results  
+[rdata ip lookup](#action-rdata-ip-lookup) - Performs a Right-Hand (RDATA) Lookup, finding IPs in record results  
+[rdata raw lookup](#action-rdata-raw-lookup) - Performs a Right-Hand (RDATA) Lookup, finding raw hexadecimal in record results  
+[rrset lookup](#action-rrset-lookup) - Perform a DNSDB Left-Hand (RRSET) lookup, finding records associated with a given hostname  
+[flex search](#action-flex-search) - Perform a Flexible search, supporting regular expression or wildcard matching  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity
 
-Type: **test**
+Type: **test**  
 Read only: **True**
 
 #### Action Parameters
 No parameters are required for this action
 
 #### Action Output
-No Output
+No Output  
 
 ## action: 'check rate limit'
 Get data of current data limit
 
-Type: **investigate**
+Type: **investigate**  
 Read only: **True**
 
 #### Action Parameters
@@ -310,21 +310,21 @@ No parameters are required for this action
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.data.\*.reset | numeric |  |   1618617600
-action_result.data.\*.remaining | numeric |  |   992
-action_result.data.\*.limit | numeric |  |   1000
-action_result.data.\*.offset_max | numeric |  |   3000000
-action_result.data.\*.results_max | numeric |  |   1000000
-action_result.status | string |  |   success  failed
-action_result.message | string |  |   Rate limit details fetched successfully
-action_result.summary | string |  |
-summary.total_objects | numeric |  |   1
-summary.total_objects_successful | numeric |  |   1
+action_result.data.\*.reset | numeric |  |   1618617600 
+action_result.data.\*.remaining | numeric |  |   992 
+action_result.data.\*.limit | numeric |  |   1000 
+action_result.data.\*.offset_max | numeric |  |   3000000 
+action_result.data.\*.results_max | numeric |  |   1000000 
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |   Rate limit details fetched successfully 
+action_result.summary | string |  |  
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rdata name lookup'
-Performs Name RDATA Lookup
+Performs a Right-Hand (RDATA) Lookup, finding names in record results
 
-Type: **investigate**
+Type: **investigate**  
 Read only: **True**
 
 If the <b>limit</b> parameter is not specified, the action will use 200.
@@ -332,40 +332,40 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**name** |  required  | Name to lookup | string |  `domain`
-**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**limit** |  optional  | Max records to return | numeric |
+**name** |  required  | Name to lookup | string |  `domain` 
+**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**limit** |  optional  | Max records to return | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.name | string |  `domain`  |   www.farsightsecurity.com
-action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.limit | numeric |  |   200
-action_result.data.\*.count | numeric |  |   100
-action_result.data.\*.rdata | string |  `domain`  |   www.farsightsecurity.com
-action_result.data.\*.rrname | string |  `domain`  |   207.4.20.149.in-addr.fsi.io.
-action_result.data.\*.rrtype | string |  |   A
-action_result.data.\*.time_last | numeric |  |   1566085287
-action_result.data.\*.time_first | numeric |  |   1566085287
-action_result.data.\*.zone_time_last | numeric |  |   1566085287
-action_result.data.\*.zone_time_first | numeric |  |   1566085287
-action_result.status | string |  |   success  failed
-action_result.message | string |  |   Total domains: 190
-action_result.summary.total_domains | numeric |  |
-summary.total_objects | numeric |  |   1
-summary.total_objects_successful | numeric |  |   1
+action_result.parameter.name | string |  `domain`  |   www.farsightsecurity.com 
+action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.limit | numeric |  |   200 
+action_result.data.\*.count | numeric |  |   100 
+action_result.data.\*.rdata | string |  `domain`  |   www.farsightsecurity.com 
+action_result.data.\*.rrname | string |  `domain`  |   207.4.20.149.in-addr.fsi.io. 
+action_result.data.\*.rrtype | string |  |   A 
+action_result.data.\*.time_last | numeric |  |   1566085287 
+action_result.data.\*.time_first | numeric |  |   1566085287 
+action_result.data.\*.zone_time_last | numeric |  |   1566085287 
+action_result.data.\*.zone_time_first | numeric |  |   1566085287 
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |   Total domains: 190 
+action_result.summary.total_domains | numeric |  |  
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rdata ip lookup'
-Performs IP RDATA Lookup
+Performs a Right-Hand (RDATA) Lookup, finding IPs in record results
 
-Type: **investigate**
+Type: **investigate**  
 Read only: **True**
 
 If the <b>limit</b> parameter is not specified, the action will use 200.
@@ -373,42 +373,42 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**ip** |  required  | IP to resolve | string |  `ip`  `dnsdb ipv6`
-**network_prefix** |  optional  | Network prefix | numeric |
-**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**limit** |  optional  | Max records to return | numeric |
+**ip** |  required  | IP to resolve | string |  `ip`  `dnsdb ipv6` 
+**network_prefix** |  optional  | A numeric parameter which is used to search out the rdata within the network prefix range. Example '24' along with an ip if 192.0.2.0 to indicate '192.0.2.0/24' | numeric | 
+**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**limit** |  optional  | Max records to return | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.ip | string |  `ip`  `dnsdb ipv6`  |   192.0.2.1
-action_result.parameter.network_prefix | numeric |  |   24
-action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.limit | numeric |  |   200
-action_result.data.\*.count | numeric |  |   100
-action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  |   192.0.2.1
-action_result.data.\*.rrname | string |  `domain`  |   ns1.uceb.org.
-action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A
-action_result.data.\*.time_last | numeric |  |   1566085287
-action_result.data.\*.time_first | numeric |  |   1566085287
-action_result.data.\*.zone_time_last | numeric |  |   1566085287
-action_result.data.\*.zone_time_first | numeric |  |   1566085287
-action_result.status | string |  |   success  failed
-action_result.message | string |  |   Total domains: 190
-action_result.summary.total_domains | numeric |  |
-summary.total_objects | numeric |  |   1
-summary.total_objects_successful | numeric |  |   1
+action_result.parameter.ip | string |  `ip`  `dnsdb ipv6`  |   192.0.2.1 
+action_result.parameter.network_prefix | numeric |  |   24 
+action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.limit | numeric |  |   200 
+action_result.data.\*.count | numeric |  |   100 
+action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  |   192.0.2.1 
+action_result.data.\*.rrname | string |  `domain`  |   ns1.uceb.org. 
+action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A 
+action_result.data.\*.time_last | numeric |  |   1566085287 
+action_result.data.\*.time_first | numeric |  |   1566085287 
+action_result.data.\*.zone_time_last | numeric |  |   1566085287 
+action_result.data.\*.zone_time_first | numeric |  |   1566085287 
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |   Total domains: 190 
+action_result.summary.total_domains | numeric |  |  
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rdata raw lookup'
-Lookup raw RDATA
+Performs a Right-Hand (RDATA) Lookup, finding raw hexadecimal in record results
 
-Type: **investigate**
+Type: **investigate**  
 Read only: **True**
 
 If the <b>limit</b> parameter is not specified, the action will use 200.
@@ -416,40 +416,40 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**raw_rdata** |  required  | An even number of hexadecimal digits specifying a raw octet string | string |  `dnsdb rdata`
-**type** |  optional  | DNS record type | string |  `dnsdb rrtype`
-**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**limit** |  optional  | Max records to return | numeric |
+**raw_rdata** |  required  | An even number of hexadecimal digits specifying a raw octet string | string |  `dnsdb rdata` 
+**record_type** |  optional  | Which DNS Record Resource Type (RRType) to search for (e.g. A, TXT, CNAME, etc). ANY will match any RRType except DNSSEC RRTypes. ANY-DNSSEC will match only the DNSSEC RRTypes. | string |  `dnsdb rrtype` 
+**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**limit** |  optional  | Max records to return | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.raw_rdata | string |  `dnsdb rdata`  |   0366736902696f00
-action_result.parameter.type | string |  `dnsdb rrtype`  |   A
-action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.limit | numeric |  |   200
-action_result.data.\*.count | numeric |  |   100
-action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  |   fsi.io. hostmaster.fsi.io. 2014052828 7200 3600 25920000 3600
-action_result.data.\*.rrname | string |  `domain`  |   dnstap.info
-action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A
-action_result.data.\*.time_last | numeric |  |   1566085287
-action_result.data.\*.time_first | numeric |  |   1566085287
-action_result.status | string |  |   success  failed
-action_result.message | string |  |   Total domains: 200
-action_result.summary.total_domains | numeric |  |
-summary.total_objects | numeric |  |   1
-summary.total_objects_successful | numeric |  |   1
+action_result.parameter.raw_rdata | string |  `dnsdb rdata`  |   0366736902696f00 
+action_result.parameter.record_type | string |  `dnsdb rrtype`  |   A 
+action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.limit | numeric |  |   200 
+action_result.data.\*.count | numeric |  |   100 
+action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  |   fsi.io. hostmaster.fsi.io. 2014052828 7200 3600 25920000 3600 
+action_result.data.\*.rrname | string |  `domain`  |   dnstap.info 
+action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A 
+action_result.data.\*.time_last | numeric |  |   1566085287 
+action_result.data.\*.time_first | numeric |  |   1566085287 
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |   Total domains: 200 
+action_result.summary.total_domains | numeric |  |  
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rrset lookup'
-Perform a DNSDB RRSET lookup
+Perform a DNSDB Left-Hand (RRSET) lookup, finding records associated with a given hostname
 
-Type: **investigate**
+Type: **investigate**  
 Read only: **True**
 
 If the <b>limit</b> parameter is not specified, the action will use 200.
@@ -457,54 +457,54 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**owner_name** |  required  | Domain to resolve | string |  `domain`
-**type** |  optional  | DNS record type | string |  `dnsdb rrtype`
-**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**bailiwick** |  optional  | Bailiwick | string |
-**limit** |  optional  | Max records to return | numeric |
+**owner_name** |  required  | Domain to resolve | string |  `domain` 
+**record_type** |  optional  | Which DNS Record Resource Type (RRType) to search for (e.g. A, TXT, CNAME, etc). ANY will match any RRType except DNSSEC RRTypes. ANY-DNSSEC will match only the DNSSEC RRTypes. | string |  `dnsdb rrtype` 
+**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**bailiwick** |  optional  | A bailiwick is an enclosing zone for a nameserver that serves the RRset or the name of the zone containing the RRset (e.g. com, example.com). | string | 
+**limit** |  optional  | Max records to return | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.owner_name | string |  `domain`  |   www.farsightsecurity.com
-action_result.parameter.type | string |  `dnsdb rrtype`  |   A
-action_result.parameter.bailiwick | string |  |   com.
-action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.limit | numeric |  |   200
-action_result.data.\*.count | numeric |  |   100
-action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  `domain`  |   66.160.140.81
-action_result.data.\*.rdata.\*.rdata_origin | string |  `host name`  |   fsi.io.
-action_result.data.\*.rdata.\*.rdata_mail_addr | string |  `email`  |   hostmaster.fsi.io
-action_result.data.\*.rdata.\*.rdata_serial | string |  |   2015040254
-action_result.data.\*.rdata.\*.rdata_refresh | string |  |   7200
-action_result.data.\*.rdata.\*.rdata_retry | string |  |   3600
-action_result.data.\*.rdata.\*.rdata_expire | string |  |   604800
-action_result.data.\*.rdata.\*.rdata_minimum | string |  |   3600
-action_result.data.\*.rdata.\*.rdata_preference | string |  |   10
-action_result.data.\*.rdata.\*.rdata_mail_exchange | string |  `domain`  |   ss.vix.su
-action_result.data.\*.rrname | string |  `domain`  |   farsightsecurity.com
-action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A
-action_result.data.\*.bailiwick | string |  `domain`  |   farsightsecurity.com.
-action_result.data.\*.time_last | numeric |  |   1566085287
-action_result.data.\*.time_first | numeric |  |   1566085287
-action_result.data.\*.zone_time_last | numeric |  |   1566085287
-action_result.data.\*.zone_time_first | numeric |  |   1566085287
-action_result.status | string |  |   success  failed
-action_result.message | string |  |   Total items: 200
-action_result.summary.total_items | numeric |  |   200
-summary.total_objects | numeric |  |   1
-summary.total_objects_successful | numeric |  |   1
+action_result.parameter.owner_name | string |  `domain`  |   www.farsightsecurity.com 
+action_result.parameter.record_type | string |  `dnsdb rrtype`  |   A 
+action_result.parameter.bailiwick | string |  |   com. 
+action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.limit | numeric |  |   200 
+action_result.data.\*.count | numeric |  |   100 
+action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  `domain`  |   66.160.140.81 
+action_result.data.\*.rdata.\*.rdata_origin | string |  `host name`  |   fsi.io. 
+action_result.data.\*.rdata.\*.rdata_mail_addr | string |  `email`  |   hostmaster.fsi.io 
+action_result.data.\*.rdata.\*.rdata_serial | string |  |   2015040254 
+action_result.data.\*.rdata.\*.rdata_refresh | string |  |   7200 
+action_result.data.\*.rdata.\*.rdata_retry | string |  |   3600 
+action_result.data.\*.rdata.\*.rdata_expire | string |  |   604800 
+action_result.data.\*.rdata.\*.rdata_minimum | string |  |   3600 
+action_result.data.\*.rdata.\*.rdata_preference | string |  |   10 
+action_result.data.\*.rdata.\*.rdata_mail_exchange | string |  `domain`  |   ss.vix.su 
+action_result.data.\*.rrname | string |  `domain`  |   farsightsecurity.com 
+action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A 
+action_result.data.\*.bailiwick | string |  `domain`  |   farsightsecurity.com. 
+action_result.data.\*.time_last | numeric |  |   1566085287 
+action_result.data.\*.time_first | numeric |  |   1566085287 
+action_result.data.\*.zone_time_last | numeric |  |   1566085287 
+action_result.data.\*.zone_time_first | numeric |  |   1566085287 
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |   Total items: 200 
+action_result.summary.total_items | numeric |  |   200 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'flex search'
-Perform a Flex search
+Perform a Flexible search, supporting regular expression or wildcard matching
 
-Type: **investigate**
+Type: **investigate**  
 Read only: **True**
 
 If the <b>limit</b> parameter is not specified, the action will use default value as 10000.
@@ -512,49 +512,49 @@ If the <b>limit</b> parameter is not specified, the action will use default valu
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**query** |  required  | Flex search query | string |
-**type** |  required  | DNS record type | string |
-**search_type** |  required  | Search syntax type | string |
-**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string |
-**exclude** |  optional  | Exclusion pattern (regex) | string |
-**limit** |  optional  | Max records to return | numeric |
+**query** |  required  | Flex search query | string | 
+**type** |  required  | DNS record type | string | 
+**search_type** |  required  | Which field of the DNS Resource Records to search | string | 
+**time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
+**exclude** |  optional  | Exclusion pattern (regex) | string | 
+**limit** |  optional  | Max records to return | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.parameter.search_type | string |  |   regex  glob
-action_result.parameter.type | string |  |   RDATA  RRNAMES
-action_result.parameter.query | string |  |   ^[1-3]\*.\*.com  ns[0-9]\*.net.
-action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z
-action_result.parameter.limit | numeric |  |   10000
-action_result.parameter.exclude | string |  |   \\.(com|site|bid|net|io)\\
-action_result.data.\*.count | numeric |  |   100
-action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  `domain`  |   66.160.140.81
-action_result.data.\*.rdata.\*.rdata_origin | string |  `host name`  |   fsi.io.
-action_result.data.\*.rdata.\*.rdata_mail_addr | string |  `email`  |   hostmaster.fsi.io
-action_result.data.\*.rdata.\*.rdata_serial | string |  |   2015040254
-action_result.data.\*.rdata.\*.rdata_refresh | string |  |   7200
-action_result.data.\*.rdata.\*.rdata_retry | string |  |   3600
-action_result.data.\*.rdata.\*.rdata_expire | string |  |   604800
-action_result.data.\*.rdata.\*.rdata_minimum | string |  |   3600
-action_result.data.\*.rdata.\*.rdata_preference | string |  |   10
-action_result.data.\*.rdata.\*.rdata_mail_exchange | string |  `domain`  |   ss.vix.su
-action_result.data.\*.rrname | string |  `domain`  |   farsightsecurity.com
-action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A
-action_result.data.\*.bailiwick | string |  `domain`  |   farsightsecurity.com.
-action_result.data.\*.time_last | numeric |  |   1566085287
-action_result.data.\*.time_first | numeric |  |   1566085287
-action_result.data.\*.zone_time_last | numeric |  |   1566085287
-action_result.data.\*.zone_time_first | numeric |  |   1566085287
-action_result.data.\*.raw_rdata | string |  |   0366736902696f00
-action_result.status | string |  |   success  failed
-action_result.message | string |  |   Total items: 10062
-action_result.summary.total_items | numeric |  |   200
-summary.total_objects | numeric |  |   1
-summary.total_objects_successful | numeric |  |   1
+action_result.parameter.search_type | string |  |   regex  glob 
+action_result.parameter.type | string |  |   RDATA  RRNAMES 
+action_result.parameter.query | string |  |   ^[1-3]\*.\*.com  ns[0-9]\*.net. 
+action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_after | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z 
+action_result.parameter.limit | numeric |  |   10000 
+action_result.parameter.exclude | string |  |   \\.(com|site|bid|net|io)\\ 
+action_result.data.\*.count | numeric |  |   100 
+action_result.data.\*.rdata | string |  `ip`  `dnsdb ipv6`  `domain`  |   66.160.140.81 
+action_result.data.\*.rdata.\*.rdata_origin | string |  `host name`  |   fsi.io. 
+action_result.data.\*.rdata.\*.rdata_mail_addr | string |  `email`  |   hostmaster.fsi.io 
+action_result.data.\*.rdata.\*.rdata_serial | string |  |   2015040254 
+action_result.data.\*.rdata.\*.rdata_refresh | string |  |   7200 
+action_result.data.\*.rdata.\*.rdata_retry | string |  |   3600 
+action_result.data.\*.rdata.\*.rdata_expire | string |  |   604800 
+action_result.data.\*.rdata.\*.rdata_minimum | string |  |   3600 
+action_result.data.\*.rdata.\*.rdata_preference | string |  |   10 
+action_result.data.\*.rdata.\*.rdata_mail_exchange | string |  `domain`  |   ss.vix.su 
+action_result.data.\*.rrname | string |  `domain`  |   farsightsecurity.com 
+action_result.data.\*.rrtype | string |  `dnsdb rrtype`  |   A 
+action_result.data.\*.bailiwick | string |  `domain`  |   farsightsecurity.com. 
+action_result.data.\*.time_last | numeric |  |   1566085287 
+action_result.data.\*.time_first | numeric |  |   1566085287 
+action_result.data.\*.zone_time_last | numeric |  |   1566085287 
+action_result.data.\*.zone_time_first | numeric |  |   1566085287 
+action_result.data.\*.raw_rdata | string |  |   0366736902696f00 
+action_result.status | string |  |   success  failed 
+action_result.message | string |  |   Total items: 10062 
+action_result.summary.total_items | numeric |  |   200 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1 

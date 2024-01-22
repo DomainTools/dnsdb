@@ -153,10 +153,10 @@ class DnsdbConnector(BaseConnector):
         # Getting mandatory input parameters
         owner_name = param[DNSDB_JSON_OWNER_NAME]
         # Getting optional input parameters
-        record_type = param.get(DNSDB_JSON_TYPE, DNSDB_JSON_TYPE_DEFAULT)
+        record_type = param.get(DNSDB_JSON_RECORD_TYPE, DNSDB_JSON_TYPE_DEFAULT)
         if record_type and record_type not in DNSDB_LOOKUP_TYPE_VALUE_LIST:
             return action_result.set_status(
-                phantom.APP_ERROR, DNSDB_VALUE_LIST_VALIDATION_MESSAGE.format(DNSDB_LOOKUP_TYPE_VALUE_LIST, DNSDB_JSON_TYPE)
+                phantom.APP_ERROR, DNSDB_VALUE_LIST_VALIDATION_MESSAGE.format(DNSDB_LOOKUP_TYPE_VALUE_LIST, DNSDB_JSON_RECORD_TYPE)
             )
 
         bailiwick = param.get(DNSDB_JSON_BAILIWICK)
@@ -415,10 +415,10 @@ class DnsdbConnector(BaseConnector):
         ret_val, limit = self._validate_integer(action_result, limit, DNSDB_LIMIT_KEY)
         if phantom.is_fail(ret_val):
             return action_result.get_status()
-        record_type = param.get(DNSDB_JSON_TYPE, DNSDB_JSON_TYPE_DEFAULT)
+        record_type = param.get(DNSDB_JSON_RECORD_TYPE, DNSDB_JSON_TYPE_DEFAULT)
         if record_type and record_type not in DNSDB_LOOKUP_TYPE_VALUE_LIST:
             return action_result.set_status(
-                phantom.APP_ERROR, DNSDB_VALUE_LIST_VALIDATION_MESSAGE.format(DNSDB_LOOKUP_TYPE_VALUE_LIST, DNSDB_JSON_TYPE)
+                phantom.APP_ERROR, DNSDB_VALUE_LIST_VALIDATION_MESSAGE.format(DNSDB_LOOKUP_TYPE_VALUE_LIST, DNSDB_JSON_RECORD_TYPE)
             )
 
         summary_data = action_result.update_summary({})

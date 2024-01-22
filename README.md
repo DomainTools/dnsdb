@@ -1,14 +1,14 @@
 [comment]: # "Auto-generated SOAR connector documentation"
-# DNSDB
+# Farsight DNSDB
 
-Publisher: Splunk  
-Connector Version: 2.1.1  
-Product Vendor: Farsight Security, Inc.  
-Product Name: DNSDB  
+Publisher: DomainTools  
+Connector Version: 2.2.0  
+Product Vendor: Farsight Security, Inc. (now part of DomainTools)  
+Product Name: Farsight DNSDB  
 Product Version Supported (regex): ".\*"  
 Minimum Product Version: 5.5.0  
 
-This app supports investigative DNS lookup actions on DNSDB
+This app supports investigative DNS lookup actions on DomainTools Farsight DNSDB, the world's larges Passive DNS historical database
 
 [comment]: # "File: README.md"
 [comment]: # "Copyright (c) 2016-2023 Splunk Inc."
@@ -32,11 +32,11 @@ This app supports investigative DNS lookup actions on DNSDB
         value through the rate_limit API.\[https://api.dnsdb.info/dnsdb/v2/rate_limit\]
     -   The action also validates the required asset parameter values and based on the value API
         response will be displayed.
-    -   For successful test connectivity, the query quota details would be shown.  
+    -   For successful test connectivity, the query quota details would be shown.
         For example: “Test succeeded. Query quota is 1000 with 987 queries remaining. Resets
         1618531200”
 
-      
+
 
 2.  ### RDATA Name Lookup
 
@@ -50,7 +50,7 @@ This app supports investigative DNS lookup actions on DNSDB
         -   For limit=0 , maximum number of results will retrieved.\[ here max = results_max of
             rate_limit\].
 
-      
+
 
 3.  ### RDATA IP Lookup
 
@@ -71,7 +71,7 @@ This app supports investigative DNS lookup actions on DNSDB
         length is a single comma (“,”) character rather than the usual slash (“/”) character to
         avoid clashing with the HTTP URI path name separator.
 
-      
+
 
 4.  ### RDATA Raw Lookup
 
@@ -84,7 +84,7 @@ This app supports investigative DNS lookup actions on DNSDB
         -   For limit=0 , maximum number of results will retrieved.\[ here max = results_max of
             rate_limit\].
 
-      
+
 
 5.  ### RRSET Lookup
 
@@ -94,10 +94,10 @@ This app supports investigative DNS lookup actions on DNSDB
         -   Wildcards are one of two forms: a left-hand (\*.example.com) or right-hand
             (www.example.\*) wildcard domain name.
         -   Example: www.farsightsecurity.com
-    -   **<u>Action Parameter</u> ​ - type**
+    -   **<u>Action Parameter</u> ​ - record type**
         -   Type is a different DNS record type. The supported types are listed below this section.
             For more information check out the dnsdb API documentation.
-        -   Default value for ‘type’ is ‘ANY’.
+        -   Default value for ‘record type’ is ‘ANY’.
     -   **<u>Action Parameter</u> ​ - bailiwick**
         -   A bailiwick is an enclosing zone for a nameserver that serves the RRset or the name of
             the zone containing the RRset.
@@ -108,7 +108,7 @@ This app supports investigative DNS lookup actions on DNSDB
         -   For limit=0 , maximum number of results will retrieved.\[ here max = results_max of
             rate_limit\].
 
-      
+
 
 6.  ### Flex Search
 
@@ -125,7 +125,7 @@ This app supports investigative DNS lookup actions on DNSDB
     -   **<u>Action Parameter</u> ​ - search type**
         -   Two search method supported namely for flex search namely,
 
-              
+
 
             1.  ‘regex’ - FCRE supported regex search
             2.  ‘glob’ - Advanced form of wildcard searches
@@ -148,11 +148,11 @@ This app supports investigative DNS lookup actions on DNSDB
     -   To know more about regex and glob search, visit:
         <https://docs.dnsdb.info/dnsdb-flex-reference-guide/#regex-search>
 
-      
+
 
 -   ### Time Fencing parameters
 
-      
+
 
     -   **<u>Action Parameter</u> ​ - time_first_before**
         -   Provide results before the defined timestamp for when the DNS record was first observed.
@@ -180,13 +180,13 @@ This app supports investigative DNS lookup actions on DNSDB
             a very long time), use “time_first_before=1325376000” and relative
             “time_last_after=-2678400”.
 
-      
 
--   ### For 'Type' action parameter in RDATA Raw Lookup and RRSET Lookup
 
-      
+-   ### For 'Record Type' action parameter in RDATA Raw Lookup and RRSET Lookup
 
-    -   Supported DNS record **types** :  
+
+
+    -   Supported DNS record **types** :
         -   ANY
         -   A
         -   A6
@@ -229,7 +229,7 @@ This app supports investigative DNS lookup actions on DNSDB
     -   For types ANY and ANY-DNSSEC, low limit can leave out retrieval of some record types.
     -   If no type is provide, then action will use 'ANY' as default
 
-  
+
 
 ## Playbook Backward Compatibility
 
@@ -239,11 +239,11 @@ This app supports investigative DNS lookup actions on DNSDB
     these action parameters to ensure the correct functioning of the playbooks created on the
     earlier versions of the app.
 
-      
+
 
     -   Lookup IP - This action has been renamed to 'RDATA IP Lookup'.
 
-          
+
 
         -   The parameters 'record seen after' and 'record seen below' have been removed.
         -   New parameters 'time first after', 'time first before', 'time last after', and 'time
@@ -251,7 +251,7 @@ This app supports investigative DNS lookup actions on DNSDB
 
     -   Lookup Domain - This action has been renamed to 'RDATA Name Lookup'.
 
-          
+
 
         -   The parameters 'domain', 'type', 'record seen after', and 'record seen below' have been
             removed.
@@ -262,7 +262,7 @@ This app supports investigative DNS lookup actions on DNSDB
     existing playbooks by inserting the corresponding action blocks for this action on the earlier
     versions of the app.
 
-      
+
 
     -   Check Rate Limit
     -   Flex Search
@@ -271,7 +271,7 @@ This app supports investigative DNS lookup actions on DNSDB
 
 
 ### Configuration Variables
-The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a DNSDB asset in SOAR.
+The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Farsight DNSDB asset in SOAR.
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
@@ -280,11 +280,11 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity  
 [check rate limit](#action-check-rate-limit) - Get data of current data limit  
-[rdata name lookup](#action-rdata-name-lookup) - Performs Name RDATA Lookup  
-[rdata ip lookup](#action-rdata-ip-lookup) - Performs IP RDATA Lookup  
-[rdata raw lookup](#action-rdata-raw-lookup) - Lookup raw RDATA  
-[rrset lookup](#action-rrset-lookup) - Perform a DNSDB RRSET lookup  
-[flex search](#action-flex-search) - Perform a Flex search  
+[rdata name lookup](#action-rdata-name-lookup) - Performs a Right-Hand (RDATA) Lookup, finding names in record results  
+[rdata ip lookup](#action-rdata-ip-lookup) - Performs a Right-Hand (RDATA) Lookup, finding IPs in record results  
+[rdata raw lookup](#action-rdata-raw-lookup) - Performs a Right-Hand (RDATA) Lookup, finding raw hexadecimal in record results  
+[rrset lookup](#action-rrset-lookup) - Perform a DNSDB Left-Hand (RRSET) lookup, finding records associated with a given hostname  
+[flex search](#action-flex-search) - Perform a Flexible search, supporting regular expression or wildcard matching  
 
 ## action: 'test connectivity'
 Validate the asset configuration for connectivity
@@ -322,7 +322,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rdata name lookup'
-Performs Name RDATA Lookup
+Performs a Right-Hand (RDATA) Lookup, finding names in record results
 
 Type: **investigate**  
 Read only: **True**
@@ -363,7 +363,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rdata ip lookup'
-Performs IP RDATA Lookup
+Performs a Right-Hand (RDATA) Lookup, finding IPs in record results
 
 Type: **investigate**  
 Read only: **True**
@@ -374,7 +374,7 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **ip** |  required  | IP to resolve | string |  `ip`  `dnsdb ipv6` 
-**network_prefix** |  optional  | Network prefix | numeric | 
+**network_prefix** |  optional  | A numeric parameter which is used to search out the rdata within the network prefix range. Example '24' along with an ip if 192.0.2.0 to indicate '192.0.2.0/24' | numeric | 
 **time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
@@ -406,7 +406,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rdata raw lookup'
-Lookup raw RDATA
+Performs a Right-Hand (RDATA) Lookup, finding raw hexadecimal in record results
 
 Type: **investigate**  
 Read only: **True**
@@ -417,7 +417,7 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **raw_rdata** |  required  | An even number of hexadecimal digits specifying a raw octet string | string |  `dnsdb rdata` 
-**type** |  optional  | DNS record type | string |  `dnsdb rrtype` 
+**record_type** |  optional  | Which DNS Record Resource Type (RRType) to search for (e.g. A, TXT, CNAME, etc). ANY will match any RRType except DNSSEC RRTypes. ANY-DNSSEC will match only the DNSSEC RRTypes. | string |  `dnsdb rrtype` 
 **time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
@@ -428,7 +428,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.raw_rdata | string |  `dnsdb rdata`  |   0366736902696f00 
-action_result.parameter.type | string |  `dnsdb rrtype`  |   A 
+action_result.parameter.record_type | string |  `dnsdb rrtype`  |   A 
 action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
 action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
 action_result.parameter.time_last_before | string |  |   -31536000  2021-01-05T12:06:02Z 
@@ -447,7 +447,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'rrset lookup'
-Perform a DNSDB RRSET lookup
+Perform a DNSDB Left-Hand (RRSET) lookup, finding records associated with a given hostname
 
 Type: **investigate**  
 Read only: **True**
@@ -458,19 +458,19 @@ If the <b>limit</b> parameter is not specified, the action will use 200.
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **owner_name** |  required  | Domain to resolve | string |  `domain` 
-**type** |  optional  | DNS record type | string |  `dnsdb rrtype` 
+**record_type** |  optional  | Which DNS Record Resource Type (RRType) to search for (e.g. A, TXT, CNAME, etc). ANY will match any RRType except DNSSEC RRTypes. ANY-DNSSEC will match only the DNSSEC RRTypes. | string |  `dnsdb rrtype` 
 **time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_last_before** |  optional  | Record last seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
-**bailiwick** |  optional  | Bailiwick | string | 
+**bailiwick** |  optional  | A bailiwick is an enclosing zone for a nameserver that serves the RRset or the name of the zone containing the RRset (e.g. com, example.com). | string | 
 **limit** |  optional  | Max records to return | numeric | 
 
 #### Action Output
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.parameter.owner_name | string |  `domain`  |   www.farsightsecurity.com 
-action_result.parameter.type | string |  `dnsdb rrtype`  |   A 
+action_result.parameter.record_type | string |  `dnsdb rrtype`  |   A 
 action_result.parameter.bailiwick | string |  |   com. 
 action_result.parameter.time_first_before | string |  |   -31536000  2021-01-05T12:06:02Z 
 action_result.parameter.time_first_after | string |  |   -31536000  2021-01-05T12:06:02Z 
@@ -502,7 +502,7 @@ summary.total_objects | numeric |  |   1
 summary.total_objects_successful | numeric |  |   1   
 
 ## action: 'flex search'
-Perform a Flex search
+Perform a Flexible search, supporting regular expression or wildcard matching
 
 Type: **investigate**  
 Read only: **True**
@@ -514,7 +514,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **query** |  required  | Flex search query | string | 
 **type** |  required  | DNS record type | string | 
-**search_type** |  required  | Search syntax type | string | 
+**search_type** |  required  | Which field of the DNS Resource Records to search | string | 
 **time_first_after** |  optional  | Record first seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_first_before** |  optional  | Record first seen before (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 
 **time_last_after** |  optional  | Record last seen after (epoch, relative seconds e.g. -31536000, or UTC timestamp e.g. 2021-01-05T12:06:02Z) | string | 

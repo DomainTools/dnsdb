@@ -610,7 +610,7 @@
                         "NSEC3PARAM",
                         "RRSIG"
                     ],
-                    "description": "DNS record type",
+                    "description": "Which DNS Record Resource Type (RRType) to search for (e.g. A, TXT, CNAME, etc). ANY will match any RRType except DNSSEC RRTypes. ANY-DNSSEC will match only the DNSSEC RRTypes.",
                     "data_type": "string",
                     "contains": [
                         "dnsdb rrtype"
@@ -856,7 +856,7 @@
                         "NSEC3PARAM",
                         "RRSIG"
                     ],
-                    "description": "DNS record type",
+                    "description": "Which DNS Record Resource Type (RRType) to search for (e.g. A, TXT, CNAME, etc). ANY will match any RRType except DNSSEC RRTypes. ANY-DNSSEC will match only the DNSSEC RRTypes.",
                     "data_type": "string",
                     "contains": [
                         "dnsdb rrtype"
@@ -1171,7 +1171,7 @@
                     "data_type": "string",
                     "order": 0
                 },
-                "record_type": {
+                "type": {
                     "value_list": [
                         "RDATA",
                         "RRNAMES"
@@ -1233,7 +1233,7 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.parameter.record_type",
+                    "data_path": "action_result.parameter.type",
                     "data_type": "string",
                     "example_values": [
                         "RDATA",

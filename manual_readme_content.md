@@ -20,11 +20,11 @@
         value through the rate_limit API.\[https://api.dnsdb.info/dnsdb/v2/rate_limit\]
     -   The action also validates the required asset parameter values and based on the value API
         response will be displayed.
-    -   For successful test connectivity, the query quota details would be shown.  
+    -   For successful test connectivity, the query quota details would be shown.
         For example: “Test succeeded. Query quota is 1000 with 987 queries remaining. Resets
         1618531200”
 
-      
+
 
 2.  ### RDATA Name Lookup
 
@@ -38,7 +38,7 @@
         -   For limit=0 , maximum number of results will retrieved.\[ here max = results_max of
             rate_limit\].
 
-      
+
 
 3.  ### RDATA IP Lookup
 
@@ -59,7 +59,7 @@
         length is a single comma (“,”) character rather than the usual slash (“/”) character to
         avoid clashing with the HTTP URI path name separator.
 
-      
+
 
 4.  ### RDATA Raw Lookup
 
@@ -72,7 +72,7 @@
         -   For limit=0 , maximum number of results will retrieved.\[ here max = results_max of
             rate_limit\].
 
-      
+
 
 5.  ### RRSET Lookup
 
@@ -82,10 +82,10 @@
         -   Wildcards are one of two forms: a left-hand (\*.example.com) or right-hand
             (www.example.\*) wildcard domain name.
         -   Example: www.farsightsecurity.com
-    -   **<u>Action Parameter</u> ​ - type**
+    -   **<u>Action Parameter</u> ​ - record type**
         -   Type is a different DNS record type. The supported types are listed below this section.
             For more information check out the dnsdb API documentation.
-        -   Default value for ‘type’ is ‘ANY’.
+        -   Default value for ‘record type’ is ‘ANY’.
     -   **<u>Action Parameter</u> ​ - bailiwick**
         -   A bailiwick is an enclosing zone for a nameserver that serves the RRset or the name of
             the zone containing the RRset.
@@ -96,7 +96,7 @@
         -   For limit=0 , maximum number of results will retrieved.\[ here max = results_max of
             rate_limit\].
 
-      
+
 
 6.  ### Flex Search
 
@@ -113,7 +113,7 @@
     -   **<u>Action Parameter</u> ​ - search type**
         -   Two search method supported namely for flex search namely,
 
-              
+
 
             1.  ‘regex’ - FCRE supported regex search
             2.  ‘glob’ - Advanced form of wildcard searches
@@ -136,11 +136,11 @@
     -   To know more about regex and glob search, visit:
         <https://docs.dnsdb.info/dnsdb-flex-reference-guide/#regex-search>
 
-      
+
 
 -   ### Time Fencing parameters
 
-      
+
 
     -   **<u>Action Parameter</u> ​ - time_first_before**
         -   Provide results before the defined timestamp for when the DNS record was first observed.
@@ -168,13 +168,13 @@
             a very long time), use “time_first_before=1325376000” and relative
             “time_last_after=-2678400”.
 
-      
 
--   ### For 'Type' action parameter in RDATA Raw Lookup and RRSET Lookup
 
-      
+-   ### For 'Record Type' action parameter in RDATA Raw Lookup and RRSET Lookup
 
-    -   Supported DNS record **types** :  
+
+
+    -   Supported DNS record **types** :
         -   ANY
         -   A
         -   A6
@@ -217,7 +217,7 @@
     -   For types ANY and ANY-DNSSEC, low limit can leave out retrieval of some record types.
     -   If no type is provide, then action will use 'ANY' as default
 
-  
+
 
 ## Playbook Backward Compatibility
 
@@ -227,11 +227,11 @@
     these action parameters to ensure the correct functioning of the playbooks created on the
     earlier versions of the app.
 
-      
+
 
     -   Lookup IP - This action has been renamed to 'RDATA IP Lookup'.
 
-          
+
 
         -   The parameters 'record seen after' and 'record seen below' have been removed.
         -   New parameters 'time first after', 'time first before', 'time last after', and 'time
@@ -239,7 +239,7 @@
 
     -   Lookup Domain - This action has been renamed to 'RDATA Name Lookup'.
 
-          
+
 
         -   The parameters 'domain', 'type', 'record seen after', and 'record seen below' have been
             removed.
@@ -250,7 +250,7 @@
     existing playbooks by inserting the corresponding action blocks for this action on the earlier
     versions of the app.
 
-      
+
 
     -   Check Rate Limit
     -   Flex Search
